@@ -1,11 +1,8 @@
-package rhea_music
+package rhea_music.music_streams
 
-import jm.constants.Durations
-
-import scala_dsl.ImplicitConversions._
 import rhea_music.ImplicitConversions._
+
 import jm.constants.Durations._
-import jm.constants.Pitches._
 import jm.music.data.{Note, Part, Phrase, Rest}
 import org.rhea_core.Stream
 
@@ -14,7 +11,7 @@ import scala.util.Random
 /**
   * @author Orestis Melkonian
   */
-class NoteStream(stream: Stream[Note]) {
+class NoteStream(val stream: Stream[Note]) {
 
   val rand: Random = new Random(System.currentTimeMillis())
   val durations: List[Double] = List(
@@ -33,25 +30,21 @@ class NoteStream(stream: Stream[Note]) {
     rand.shuffle(durations).head
 
   /**
-    * Accumulate notes in one single part.
-    * @return the motif as a instrument part
-    */
-  def toPart: Stream[Part] =
-    stream.toPhrase.map[Part]((p: Phrase) => new Part(p))
-
-  /**
-    * Accumulate notes in one single part.
-    * @param instr the instrument to use
-    * @return the motif as a instrument part
-    */
-  def toPart(instr: Int): Stream[Part] =
-    stream.toPhrase.map[Part]((p: Phrase) => new Part("intst" + instr, instr, p))
-
-  /**
     * @return the motif as a phrase
     */
-  def toPhrase: Stream[Phrase] =
+  def toPhrase: PhraseStream =
     stream.collect[Phrase](() => new Phrase(), (p: Phrase, n: Note) => p.addNote(n))
+
+  /**
+    * Set rhythm to the motif.
+    * @param rhythm stream of rhythm durations
+    * @return the motif with rhythm
+    */
+  def setRhythm(rhythm: Stream[Double]): Stream[Note] =
+    Stream.zip[Double, Note, Note](rhythm, stream, (r: Double, n: Note) => {
+      n.setRhythmValue(r)
+      n
+    }: Note)
 
   /**
     * Transpose motif.

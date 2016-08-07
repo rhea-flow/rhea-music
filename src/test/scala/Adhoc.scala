@@ -1,13 +1,15 @@
 import scala_dsl.ImplicitConversions._
 import rhea_music.ImplicitConversions._
-
 import jm.constants.Instruments._
 import jm.constants.Durations._
-import jm.music.data.{Note, Part}
-import org.junit.Test
+import jm.music.data._
+import org.junit.{Before, Test}
 import org.rhea_core.Stream
+import jm.music.tools.ca.CellularAutomata
+import rhea_music.cellular_automata.{HarmonyMapper, HarmonyRange, CellularAutomata => CA}
 import rx_eval.RxjavaEvaluationStrategy
 import rhea_music.chaos.{ChaosStream, ChaoticFunction, ComplexFunction}
+import rhea_music.utils.constants.Chords._
 import test_data.utilities.Threads
 
 
@@ -16,10 +18,13 @@ import test_data.utilities.Threads
  */
 class Adhoc {
 
+  @Before
+  def setEval(): Unit = {
+    Stream.evaluationStrategy = new RxjavaEvaluationStrategy
+  }
+
 //  @Test
   def chaoticMelody() {
-    Stream.evaluationStrategy = new RxjavaEvaluationStrategy
-
 
     val rhythm: Stream[Double] =
       ChaosStream.from(
@@ -75,9 +80,8 @@ class Adhoc {
     Threads.sleep()
   }
 
-  @Test
+//  @Test
   def complexMelody() {
-    Stream.evaluationStrategy = new RxjavaEvaluationStrategy
 
     val (s1: ChaosStream, s2: ChaosStream) =
       ChaosStream.from(ComplexFunction.f3(A=1.4, B=0.3), N=100)
@@ -125,6 +129,68 @@ class Adhoc {
         1
       } : Integer
     ).printAll()//.play()*/
+
+    Threads.sleep()
+  }
+
+  @Test
+  def ca(): Unit = {
+    val mapper: HarmonyMapper = new HarmonyMapper(
+      new HarmonyRange(
+        0, 0,
+        4, 4,
+        Cmaj7
+      ),
+      new HarmonyRange(
+        5, 0,
+        9, 4,
+        Fmaj7
+      ),
+      new HarmonyRange(
+        0, 5,
+        4, 9,
+        Am9
+      ),
+      new HarmonyRange(
+        5, 5,
+        9, 7,
+        G7
+      ),
+      new HarmonyRange(
+        5, 8,
+        9, 9,
+        Bdim7
+      )
+    )
+
+    CA.from(N=1)
+      .mapToHarmony(mapper)
+      .toPart
+//      .subscribe((p: Part) =>  println(p.getPhraseArray.length))
+      .toScore
+        .subscribe((s: Score) => println(s.getEndTime))
+//      .notate()
+//      .count().print()
+      /*.setRhythm(
+        ChaosStream.from(
+          ChaoticFunction.f1(1.5),
+          100
+        ).mapToRhythm(EIGHTH_NOTE_TRIPLET, WHOLE_NOTE)
+      )*/
+//      .play()
+//    .printAll()
+//      .writeMidi("ca.midi")
+
+    Threads.sleep()
+
+  }
+
+//  @Test
+  def chord(): Unit = {
+    Stream.just(Fmaj7)
+        .play()
+//      .toPart.print()
+//      .notate()
 
     Threads.sleep()
   }

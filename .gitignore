@@ -6,3 +6,5 @@ projectFilesBackup/
 *.ipr
 *.iws
 *.au
+*.midi
+*.tmp

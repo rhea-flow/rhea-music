@@ -7,7 +7,8 @@ import jm.constants.Durations._
 import jm.music.data.{Note, Part, Phrase, Rest}
 import org.rhea_core.Stream
 import rhea_music.music_streams.NoteStream
-import rhea_music.utils.Contants._
+import rhea_music.utils.constants.PitchRanges._
+import rhea_music.utils.mapRange
 
 import scala.util.Random
 
@@ -18,7 +19,7 @@ class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
 
   def mapToPitch(min: Int, max: Int): NoteStream =
     stream.map((t: Double) =>
-      new Note(ChaosStream.mapRange(range._1, range._2, min, max, t).toInt, QN)
+      new Note(mapRange(range._1, range._2, min, max, t).toInt, QN)
     ): Stream[Note]
   def mapToBass: NoteStream =
     mapToPitch _ tupled bassRange
@@ -35,7 +36,7 @@ class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
     stream.map((t: Double) => {
       val indexMin = ChaosStream.durations.indexOf(min).toDouble
       val indexMax = ChaosStream.durations.indexOf(max).toDouble
-      val index = ChaosStream.mapRange(range._1, range._2, indexMin, indexMax, t).toInt
+      val index = mapRange(range._1, range._2, indexMin, indexMax, t).toInt
       ChaosStream.durations(index)
     }
   ): Stream[Double]
@@ -84,21 +85,6 @@ object ChaosStream {
       offset = - min
     }
     (min + offset, max + offset, offset)
-  }
-  /**
-    * Maps a value to a different numeric range
-    *
-    * @param inputMin lower bound of x
-    * @param inputMax upper bound of x
-    * @param outputMin desired lower bound
-    * @param outputMax desired upper bound
-    * @param x    the value to map (aMin..aMax)
-    * @return the mapped value (bMin..bMax)
-    */
-  def mapRange(inputMin: Double, inputMax: Double,
-               outputMin: Double, outputMax: Double,
-               x: Double): Double = {
-    outputMin + (x - inputMin) * (outputMax - outputMin) / (inputMax - inputMin)
   }
 
   def unzip[T](stream: Stream[(T, T)]): (Stream[T], Stream[T]) = (

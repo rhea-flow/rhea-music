@@ -10,8 +10,6 @@ class GenericFunction[T <: Ordered[T],C](val func: Array[C] => T => T,
                                          val init: T
                                         ) extends Func1[T, T] {
 
-  // TODO generalise for systems with N chaotic equations
-
   override def call(t: T): T = func(constants)(t)
 
   def range(N: Int): (T, T) = {
@@ -36,10 +34,10 @@ class GenericFunction[T <: Ordered[T],C](val func: Array[C] => T => T,
 
 object GenericFunction {
 
-  def f3(): GenericFunction[(Double, Double), Double] =
+  /*def f3(): GenericFunction[(Double, Double), Double] =
     new GenericFunction[(Double, Double), Double](
       constants = Array(1.4, 0.3),
       init = (0.0, 0.0),
       func = c => p => (1 + p._2 - c(0) * p._1 * p._1, c(1) * p._1)
-    )
+    )*/
 }

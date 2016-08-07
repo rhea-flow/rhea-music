@@ -1,0 +1,94 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+repositories {
+	mavenCentral()
+	maven { url "https://jitpack.io" }
+	maven { url "https://dl.bintray.com/underscoreio/training" }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "com.github.rhea-flow"
+version = 1.0
+
+dependencies {
+
+	// rhea-flow
+	compile 'com.github.rhea-flow:rhea-core:-SNAPSHOT'
+	compile 'com.github.rhea-flow:rx-eval:-SNAPSHOT'
+	compile 'com.github.rhea-flow:scala-wrapper:-SNAPSHOT'
+
+    // compose
+    compile 'io.underscore:compose-core_2.11:0.3.0'
+	compile 'io.underscore:compose-player_2.11:0.3.0'
+	compile 'io.underscore:compose-examples_2.11:0.3.0'
+
+	// Scala
+//  	compile 'org.scala-lang:scala-compiler:2.12.0-M3'
+//  	compile 'org.scala-lang:scala-library:2.12.0-M3'
+//	compile 'org.scala-lang.modules:scala-java8-compat_2.12.0-M5:0.8.0-RC3'
+
+	compile 'org.scala-lang:scala-compiler:2.11.7'
+//	compile 'org.scala-lang:scala-library:2.10.0-M1'
+//	compile 'org.scala-lang.modules:scala-java8-compat_2.10.0-M2:0.8.0-RC3'
+
+//	compile files('./scala-lib/scala-library.jar')
+//	compile files('./scala-lib/scala-compiler.jar')
+//	compile files('./scala-lib/scalap-2.12.0-M5.jar')
+//	compile files('./scala-lib/scala-parser-combinators_2.12.0-M5-1.0.4.jar')
+//	compile files('./scala-lib/scala-reflect.jar')
+//	compile files('./scala-lib/scala-swing_2.12.0-M5-2.0.0-M2.jar')
+//	compile files('./scala-lib/scala-xml_2.12.0-M5-1.0.5.jar')
+//	compile files('./scala-lib/jline-2.14.1.jar')
+
+	testCompile 'junit:junit:4.11'
+	testCompile 'com.github.rhea-flow:test-data:-SNAPSHOT'
+	testCompile 'com.github.rhea-flow:graph-viz:-SNAPSHOT'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+tasks.withType(ScalaCompile) {
+	// Use incremental compilation
+	scalaCompileOptions.useAnt = false
+	// Enable Scala warnings output
+	scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
+test {
+	testLogging {
+		displayGranularity 3
+		//events 'passed', 'failed', 'standard_out'
+		//events 'passed', 'failed', 'standard_error'
+		events 'passed', 'failed', 'standard_out', 'standard_error'
+		exceptionFormat = 'full'
+	}
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+	allprojects {
+		tasks.withType(Javadoc) {
+			options.addStringOption('Xdoclint:none', '-quiet')
+		}
+	}
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.10'
+}

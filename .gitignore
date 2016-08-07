@@ -1,0 +1,10 @@
+build/
+.gradle/
+.idea/
+projectFilesBackup/
+*.iml
+*.ipr
+*.iws
+*.au
+*.midi
+*.tmp

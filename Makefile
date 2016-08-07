@@ -3,7 +3,7 @@ install:
 update:
 	@./gradlew install --refresh-dependencies
 adhoc:
-	@./gradlew test --tests Adhoc --stacktrace
+	@./gradlew test --tests Adhoc
 idea:
 	@./gradlew idea
 doc:

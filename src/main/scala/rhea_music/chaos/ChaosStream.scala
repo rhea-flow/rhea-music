@@ -1,21 +1,20 @@
 package rhea_music.chaos
 
+import org.jfugue.rhythm.Rhythm
 import rhea_music.ImplicitConversions._
-
 import org.jfugue.theory.{Chord, Intervals, Note}
 import org.rhea_core.Stream
-
-import rhea_music.music_streams.{ChordStream, IntervalsStream, NoteStream}
+import rhea_music.music_streams.{ChordStream, IntervalsStream, NoteStream, RhythmStream}
 import rhea_music.util.mapToArray
 import rhea_music.util.constants.Notes.allNotes
 import rhea_music.util.constants.Intervals.allIntervals
 import rhea_music.util.constants.Chords.allChords
+import rhea_music.util.constants.Rhythms.allRhythms
 
 /**
   * @author Orestis Melkonian
   */
 class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
-
 
   def mapToNotes: NoteStream =
     stream.map[Note]((x: Double) =>
@@ -30,6 +29,11 @@ class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
   def mapToChords: ChordStream =
     stream.map[Chord]((x: Double) =>
       mapToArray(range._1, range._2, x, allChords)
+    )
+
+  def mapToRhythm: RhythmStream =
+    stream.map[Rhythm]((x: Double) =>
+      new Rhythm().addLayer("" + mapToArray(range._1, range._2, x, allRhythms))
     )
 }
 

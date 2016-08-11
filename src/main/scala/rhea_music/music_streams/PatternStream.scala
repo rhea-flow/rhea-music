@@ -2,8 +2,7 @@ package rhea_music.music_streams
 
 import rhea_music.ImplicitConversions._
 import scala_dsl.ImplicitConversions._
-
-import java.util.concurrent.atomic.AtomicInteger
+import scala.languageFeature.implicitConversions._
 
 import org.jfugue.pattern.{Pattern, PatternProducer}
 import org.jfugue.player.Player
@@ -40,20 +39,23 @@ object PatternStream {
   def repeatFunc[T](func: () => T): Stream[T] =
     Stream.just(func()).loop((entry: Stream[T]) => entry.map(n => func()))
 
-  def merge(s1: PatternStream, s2: PatternStream): PatternStream =
-    Stream.concat[PatternProducer](s1, s2)
-      .reduce(
-        (new Pattern, new AtomicInteger(0)),
-        (tuple: Tuple2[Pattern, AtomicInteger], p: PatternProducer) => {
-          val pattern: Pattern = tuple._1
-          val counter: AtomicInteger = tuple._2
-          println("Got " + counter.get())
-          pattern.add(p, 1).setVoice(counter.getAndIncrement())
-          (pattern, counter)
-        }
-      ).map[PatternProducer]((tuple: Tuple2[Pattern, _]) => tuple._1.asInstanceOf[PatternProducer]) : PatternStream
+  def sync(s1: PatternStream, s2: PatternStream): PatternStream =
+    Stream.zip[PatternProducer, PatternProducer, PatternProducer](
+      s1, s2,
+      (p1: PatternProducer, p2: PatternProducer) => {
+        val pattern: Pattern = new Pattern()
+        pattern.add(p1, p2)
+        pattern
+      })
 
-
+  def sync3(s1: PatternStream, s2: PatternStream, s3: PatternStream): PatternStream =
+    Stream.zip[PatternProducer, PatternProducer, PatternProducer, PatternProducer](
+      s1, s2, s3,
+      (p1: PatternProducer, p2: PatternProducer, p3: PatternProducer) => {
+        val pattern: Pattern = new Pattern()
+        pattern.add(p1, p2, p3)
+        pattern
+      })
 }
 /*val p: Pattern = new Pattern
 p.add(p1.getPattern.setVoice(0))

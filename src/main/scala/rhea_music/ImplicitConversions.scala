@@ -1,6 +1,7 @@
 package rhea_music
 
 import org.jfugue.pattern.PatternProducer
+import org.jfugue.rhythm.Rhythm
 import org.jfugue.theory.{Chord, Intervals, Note}
 import org.rhea_core.Stream
 import rhea_music.music_streams._
@@ -22,6 +23,10 @@ package object ImplicitConversions {
   implicit def chordifyStream(st: Stream[Chord]): ChordStream = new ChordStream(st)
   implicit def _chordifyStream(st: ChordStream): Stream[Chord] = st.stream
 
+  // Rhythms
+  implicit def rhythmifyStream(st: Stream[Rhythm]): RhythmStream = new RhythmStream(st)
+  implicit def _rhythmifyStream(st: RhythmStream): Stream[Rhythm] = st.stream
+
   // Patterns
   implicit def patternifyStream(st: Stream[PatternProducer]): PatternStream = new PatternStream(st)
   implicit def _patternifyStream(st: PatternStream): Stream[PatternProducer] = st.stream
@@ -34,5 +39,8 @@ package object ImplicitConversions {
 
   implicit def chordToPat(st: ChordStream): PatternStream =
     new PatternStream(st.map((n: Chord) => n.asInstanceOf[PatternProducer]))
+
+  implicit def rhythmToPat(st: RhythmStream): PatternStream =
+    new PatternStream(st.map((n: Rhythm) => n.asInstanceOf[PatternProducer]))
 
 }

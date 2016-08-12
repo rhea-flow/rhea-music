@@ -4,37 +4,41 @@ import org.jfugue.rhythm.Rhythm
 import rhea_music.ImplicitConversions._
 import org.jfugue.theory.{Chord, Intervals, Note}
 import org.rhea_core.Stream
-import rhea_music.music_streams.{ChordStream, IntervalsStream, NoteStream, RhythmStream}
+import rhea_music.music_streams._
 import rhea_music.util.mapToArray
 import rhea_music.util.constants.Notes.allNotes
 import rhea_music.util.constants.Intervals.allIntervals
 import rhea_music.util.constants.Chords.allChords
 import rhea_music.util.constants.Rhythms.allRhythms
+import rhea_music.util.constants.Durations.allDurations
+import rhea_music.util.constants.Durations.getDurationRange
 
 /**
   * @author Orestis Melkonian
   */
 class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
 
-  def mapToNotes: NoteStream =
-    stream.map[Note]((x: Double) =>
-      mapToArray(range._1, range._2, x, allNotes)
+  def mapTo[T](array: Array[T]): Stream[T] =
+    stream.map[T]((x: Double) =>
+      mapToArray(range._1, range._2, x, array)
     )
+
+  def mapToNotes: NoteStream =
+    mapTo[Note](allNotes)
 
   def mapToIntervals: IntervalsStream =
-    stream.map[Intervals]((x: Double) =>
-      mapToArray(range._1, range._2, x, allIntervals)
-    )
+    mapTo[Intervals](allIntervals)
 
   def mapToChords: ChordStream =
-    stream.map[Chord]((x: Double) =>
-      mapToArray(range._1, range._2, x, allChords)
-    )
+    mapTo[Chord](allChords)
 
   def mapToRhythm: RhythmStream =
-    stream.map[Rhythm]((x: Double) =>
-      new Rhythm().addLayer("" + mapToArray(range._1, range._2, x, allRhythms))
+    mapTo[Char](allRhythms).map[Rhythm]((c: Char) =>
+      new Rhythm().addLayer(c.toString)
     )
+
+  def mapToDuration(from: String = "w", to: String = "s"): DurationStream =
+    mapTo[String](getDurationRange(from, to))
 }
 
 object ChaosStream {
@@ -68,6 +72,16 @@ object ChaosStream {
       )
 
     (c1, c2)
+  }
+
+  def chaoticMelody(N: Int): PatternStream = {
+    val (s1, s2) = from(ComplexFunction.f3(1.4, 0.3), N)
+    s1.mapToNotes.setDuration(s2.mapToDuration())
+  }
+
+  def chaoticHarmony(N: Int): PatternStream = {
+    val (s1, s2) = from(ComplexFunction.f3(1.4, 0.3), N)
+    s1.mapToChords.setDuration(s2.mapToDuration("w", "i"))
   }
 
   def unzip[T](stream: Stream[(T, T)]): (Stream[T], Stream[T]) = (

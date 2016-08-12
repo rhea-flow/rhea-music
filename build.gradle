@@ -26,6 +26,8 @@ dependencies {
 
     // jFugue
 	compile files('./jfugue-5.0.7.jar')
+//	compile 'org.kie.modules:nu-xom-main:-SNAPSHOT'
+	compile files('./xom-1.2.10.jar')
 
 	// Scala
   	compile 'org.scala-lang:scala-compiler:2.12.0-M3'

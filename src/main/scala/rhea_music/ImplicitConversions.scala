@@ -27,6 +27,10 @@ package object ImplicitConversions {
   implicit def rhythmifyStream(st: Stream[Rhythm]): RhythmStream = new RhythmStream(st)
   implicit def _rhythmifyStream(st: RhythmStream): Stream[Rhythm] = st.stream
 
+  // Durations
+  implicit def durifyStream(st: Stream[String]): DurationStream = new DurationStream(st)
+  implicit def _durifyStream(st: DurationStream): Stream[String] = st.stream
+
   // Patterns
   implicit def patternifyStream(st: Stream[PatternProducer]): PatternStream = new PatternStream(st)
   implicit def _patternifyStream(st: PatternStream): Stream[PatternProducer] = st.stream

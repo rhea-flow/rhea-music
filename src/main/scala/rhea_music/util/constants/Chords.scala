@@ -1,6 +1,5 @@
 package rhea_music.util.constants
 
-import org.jfugue.theory.{Chord, Note, Intervals => Inter}
 import rhea_music.util.constants.Notes.allNotes
 import rhea_music.util.constants.Intervals.allIntervals
 
@@ -11,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 object Chords {
 
-  def allChords: Array[Chord] = {
+  /*def allChords: Array[Chord] = {
     var array: ArrayBuffer[Chord] = ArrayBuffer()
     // All 12 keys
     for (note: Note <- allNotes)
@@ -29,5 +28,5 @@ object Chords {
       true
     })
     chords
-  }
+  }*/
 }

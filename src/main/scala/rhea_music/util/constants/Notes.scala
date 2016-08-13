@@ -1,7 +1,7 @@
 package rhea_music.util.constants
 
-import org.jfugue.theory.Note
-import org.jfugue.theory.Note._
+import org.jfugue.theory.Note.NOTE_NAMES_COMMON
+import rhea_music.music_types.Note
 
 /**
   * @author Orestis Melkonian

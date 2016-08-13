@@ -8,10 +8,18 @@ import org.jfugue.midi.MidiDictionary.{INSTRUMENT_STRING_TO_BYTE => Instr}
   */
 object Instruments {
 
-  def allInstruments: Array[String] = {
+  // Type alias
+  type InstrumentType = String
+
+  // Constants
+  val piano = "Piano"
+  val bright = "Bright_Acoustic"
+  // TODO add all MIDI instruments
+
+
+  def allInstruments: Array[String] =
     Instr
       .keySet()
       .toArray(new Array[String](Instr.size()))
-  }
 
 }

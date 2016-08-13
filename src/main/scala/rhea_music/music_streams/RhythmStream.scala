@@ -8,7 +8,6 @@ import org.rhea_core.Stream
   */
 class RhythmStream(val stream: Stream[Rhythm]) {
 
-
 }
 
 

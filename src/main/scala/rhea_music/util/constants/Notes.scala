@@ -12,5 +12,7 @@ object Notes {
 
   def allNotes: Array[Note] = noteStrings.map(s => new Note(s))
 
+  def eminor: Array[Note] = Array("E", "F#", "G", "A", "B", "C", "D").map(s => new Note(s))
+
 //  def pitches: Array[Note] = TODO
 }

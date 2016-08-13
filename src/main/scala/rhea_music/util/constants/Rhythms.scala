@@ -1,6 +1,6 @@
 package rhea_music.util.constants
 
-import org.jfugue.rhythm.Rhythm.DEFAULT_RHYTHM_KIT
+import org.jfugue.rhythm.Rhythm.{DEFAULT_RHYTHM_KIT => Drums}
 
 /**
   * @author Orestis Melkonian
@@ -8,10 +8,14 @@ import org.jfugue.rhythm.Rhythm.DEFAULT_RHYTHM_KIT
 object Rhythms {
 
   def allRhythms: Array[Char] = {
-      DEFAULT_RHYTHM_KIT
+      Drums
         .keySet()
-        .toArray(new Array[Character](DEFAULT_RHYTHM_KIT.size()))
+        .toArray(new Array[Character](Drums.size()))
         .map(_.charValue())
   }
+
+  def basicRhythms: Array[Char] = Array(
+    '.', 'O', 'S', '^', 'o', 's', '`'
+  )
 
 }

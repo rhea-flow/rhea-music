@@ -5,11 +5,16 @@ import org.jfugue.rhythm.Rhythm
 import org.jfugue.theory.{Chord, Intervals, Note}
 import org.rhea_core.Stream
 import rhea_music.music_streams._
+import rhea_music.util.RichArray
 
 /**
  * @author Orestis Melkonian
  */
 package object ImplicitConversions {
+
+  // RichArrays
+  implicit def enrichArray[T](a: Array[T]): RichArray[T] = new RichArray[T](a)
+  implicit def _enrichArray[T](a: RichArray[T]): Array[T] = a.array
 
   // Notes
   implicit def notifyStream(st: Stream[Note]): NoteStream = new NoteStream(st)
@@ -26,6 +31,9 @@ package object ImplicitConversions {
   // Rhythms
   implicit def rhythmifyStream(st: Stream[Rhythm]): RhythmStream = new RhythmStream(st)
   implicit def _rhythmifyStream(st: RhythmStream): Stream[Rhythm] = st.stream
+
+  implicit def charToRhythm(st: Stream[Char]): RhythmStream =
+    new RhythmStream(st.map[Rhythm]((c: Char) => new Rhythm().addLayer(c.toString)))
 
   // Durations
   implicit def durifyStream(st: Stream[String]): DurationStream = new DurationStream(st)
@@ -46,5 +54,8 @@ package object ImplicitConversions {
 
   implicit def rhythmToPat(st: RhythmStream): PatternStream =
     new PatternStream(st.map((n: Rhythm) => n.asInstanceOf[PatternProducer]))
+
+  implicit def charToPat(st: Stream[Char]): PatternStream =
+    new PatternStream(charToRhythm(st).map((n: Rhythm) => n.asInstanceOf[PatternProducer]))
 
 }

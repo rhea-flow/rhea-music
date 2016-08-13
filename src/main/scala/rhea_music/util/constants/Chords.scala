@@ -20,4 +20,14 @@ object Chords {
         array += new Chord(note, interval)
     array.toArray
   }
+
+  def constraintChords(notes: Array[Note]): Array[Chord] = {
+    val chords = allChords filter ((c: Chord) => {
+      for (n: Note <- c.getNotes)
+        if (!(notes contains n))
+          false
+      true
+    })
+    chords
+  }
 }

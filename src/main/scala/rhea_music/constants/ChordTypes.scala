@@ -1,4 +1,4 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 
 /**
@@ -55,4 +55,12 @@ object ChordTypes {
     M, m, aug, dim, sus4, sus2, M7, m7, _7, dim7, M6, m6, M9, m9, _9, add9, m11, _11,
     M13, m13, _13, _7b5, _7s5, _7b5b9, _7b5s9, _7s5b9, _7s5s9, M7b5, M7s5, mM7
   )
+
+  def getNumberOfInversions(chordType: ChordType): Int = chordType match {
+    case `M` | `m` | `aug` | `dim` | `sus4` | `sus2` => 3
+    case `M7` | `m7` | `_7` | `dim7` | `M6` | `m6` | `add9`
+         | `_7b5` | `_7s5` | `M7b5` | `M7s5` | `mM7` => 4
+    case `M9` | `m9` | `_9` | `m11` | `_11` | `M13` | `m13` | `_13`
+         | `_7b5b9` | `_7b5s9` | `_7s5b9` | `_7s5s9`  => 5
+  }
 }

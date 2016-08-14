@@ -1,6 +1,4 @@
-package rhea_music.util.constants
-
-import rhea_music.ImplicitConversions._
+package rhea_music.constants
 
 /**
   * @author Orestis Melkonian
@@ -21,8 +19,5 @@ object Tones {
   val R = "R"
 
   // Array collection
-  def allTones: Array[Tone] = "C D E F G A B R"
-
-  // Implicit conversion
-  implicit def fromToneArray(str: String): Array[Tone] = str.split(" ")
+  def allTones: Array[Tone] = Array(C, D, E, F, G, A, B, R)
 }

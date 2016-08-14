@@ -9,9 +9,14 @@ trait MusicString {
   // Staccato representation.
   def repr: String
 
-  def +(that: MusicString): MusicString =
+  /*def +(that: MusicString): MusicString =
     new MusicString {
       override def repr: String = this.repr + " " + that.repr
+    }*/
+
+  def wrap(wrapper: Wrapper[_]): MusicString =
+    new MusicString {
+      override def repr: String = wrapper.wrap + " " + this.repr
     }
 
 }

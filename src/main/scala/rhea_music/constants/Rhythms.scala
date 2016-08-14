@@ -1,4 +1,4 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 import org.jfugue.rhythm.Rhythm.{DEFAULT_RHYTHM_KIT => Drums}
 

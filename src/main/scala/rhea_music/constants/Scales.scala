@@ -1,8 +1,8 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 import org.jfugue.theory.{Chord, Note, Scale, Intervals => Inter}
-import rhea_music.util.constants.Intervals.allIntervals
-import rhea_music.util.constants.Notes.allNotes
+import rhea_music.constants.Intervals.allIntervals
+import rhea_music.constants.Notes.allNotes
 
 import scala.collection.mutable.ArrayBuffer
 

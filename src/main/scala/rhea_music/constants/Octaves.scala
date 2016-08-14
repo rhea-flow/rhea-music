@@ -1,4 +1,4 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 /**
   * @author Orestis Melkonian
@@ -9,6 +9,7 @@ object Octaves {
   type Octave = Int
 
   // Constants
+  val noOctave = -1
   val _0 = 0
   val _1 = 1
   val _2 = 2
@@ -19,11 +20,7 @@ object Octaves {
   val _7 = 7
   val _8 = 8
   val _9 = 9
-  val _10 = 10
 
   // Array collection
-  def allOctaves: Array[Octave] = "0 1 2 3 4 5 6 7 8 9 10"
-
-  // Implicit conversion
-  implicit def fromOctaveArray(str: String): Array[Octave] = str.split(" ").map(_.toInt)
+  def allOctaves: Array[Octave] = Array(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9)
 }

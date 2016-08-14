@@ -1,4 +1,4 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 import rhea_music.ImplicitConversions._
 
@@ -11,6 +11,7 @@ object Durations {
   type Duration = String
 
   // Constants
+  val noDuration = ""
   val whole = "w"
   val whole_ = "w."
   val whole__ = "w.."

@@ -1,11 +1,12 @@
 package rhea_music.music_types
 
-import rhea_music.util.constants.ChordTypes.ChordType
+import rhea_music.constants.ScaleTypes.ScaleType
+import rhea_music.constants.Tones.Tone
 
 /**
   * @author Orestis Melkonian
   */
-class Scale extends MusicString {
+class Scale(var tone: Tone, scaleType: ScaleType) {
 
-  override def repr: String = ???
+  def getNotes: Array[Note] = ???
 }

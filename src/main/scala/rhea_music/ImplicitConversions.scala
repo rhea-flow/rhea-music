@@ -1,8 +1,6 @@
 package rhea_music
 
-import org.jfugue.pattern.{Pattern, PatternProducer}
-import org.jfugue.rhythm.Rhythm
-import org.jfugue.theory.{Chord, Intervals, Note}
+import org.jfugue.pattern.Pattern
 import org.rhea_core.Stream
 import rhea_music.music_streams._
 import rhea_music.music_types.MusicString
@@ -13,7 +11,11 @@ import rhea_music.util.RichArray
  */
 package object ImplicitConversions {
 
-  implicit def toPattern(ms: MusicString): Pattern = new Pattern(ms.repr)
+  implicit def stringToMusic(s: String): MusicString = new MusicString {override def repr: String = s}
+  implicit def _stringToMusic(s: MusicString): String = s.repr
+
+  implicit def stringToPattern(s: String): Pattern = new Pattern(s)
+  implicit def msToPattern(ms: MusicString): Pattern = new Pattern(ms.repr)
 
   implicit def musicStream[T <: MusicString](s: Stream[T]): MusicStream = new MusicStream(s)
 

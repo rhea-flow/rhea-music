@@ -1,4 +1,4 @@
-package rhea_music.util.constants
+package rhea_music.constants
 
 /**
   * @author Orestis Melkonian

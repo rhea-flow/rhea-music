@@ -1,7 +1,7 @@
 package rhea_music.music_types
 
-import rhea_music.util.constants.Ratios.Ratio
-import rhea_music.util.constants.Ratios._
+import rhea_music.constants.Ratios.Ratio
+import rhea_music.constants.Ratios._
 
 /**
   * @author Orestis Melkonian

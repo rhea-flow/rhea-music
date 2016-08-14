@@ -1,13 +1,14 @@
 import rhea_music.ImplicitConversions._
-
 import scala.languageFeature.implicitConversions._
+
 import org.junit.{Before, Test}
 import org.rhea_core.Stream
 import org.rhea_core.internal.graph.FlowGraph
 import rhea_music.music_streams.MusicStream
 import rx_eval.RxjavaEvaluationStrategy
 import test_data.utilities.Threads
-import rhea_music.music_types.Note
+import rhea_music.music_types.{Chord, Note}
+import rhea_music.constants.Chords.allChords
 
 /**
  * @author Orestis Melkonian
@@ -30,9 +31,19 @@ class Adhoc {
 
   @Test
   def init() = {
-    val n: Note = new Note()
-    val s: MusicStream = Stream.just(n).repeat(10)
-    s.play()
+    MusicStream.player.play("Cdom7b5")
+
+    // TODO add collection implicits
+    /*Stream.from(allChords.toIterable).subscribe((c: Chord) => {
+      println(c)
+      MusicStream.player.play(c.rep)
+    })*/
+
+    val s: MusicStream =
+//      Note.randNotes
+      Chord.randChords
+
+//    s.play()
 
     Threads.sleep()
   }

@@ -8,10 +8,10 @@ import org.rhea_core.Stream
 import rhea_music.music_streams._
 import rhea_music.util.mapToArray
 
-import rhea_music.util.constants.Notes.allNotes
-import rhea_music.util.constants.Intervals.allIntervals
-import rhea_music.util.constants.Rhythms.allRhythms
-import rhea_music.util.constants.Durations.allDurations
+import rhea_music.constants.Notes.allNotes
+import rhea_music.constants.Intervals.allIntervals
+import rhea_music.constants.Rhythms.allRhythms
+import rhea_music.constants.Durations.allDurations
 
 /**
   * @author Orestis Melkonian

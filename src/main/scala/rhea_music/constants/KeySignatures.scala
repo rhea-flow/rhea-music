@@ -18,25 +18,25 @@ object KeySignatures {
   def allKeySignatures: Array[KeySignature] = {
     var buffer = new ArrayBuffer[KeySignature]()
 
-    buffer += new KeySignature(major, new Note(tone = C, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = C, duration = noDuration))
     
     // Flat keys
-    buffer += new KeySignature(major, new Note(tone = F, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Eb, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Ab, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Db, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Gb, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Cb, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = F, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = B, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Eb, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Ab, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Db, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Gb, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Cb, duration = noDuration))
 
     // Sharp keys
-    buffer += new KeySignature(major, new Note(tone = G, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = D, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = A, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = E, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Fs, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = Cs, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = G, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = D, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = A, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = E, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = B, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Fs, duration = noDuration))
+    buffer += new KeySignature(major, new Note(root = Cs, duration = noDuration))
 
     buffer.toArray
   }

@@ -22,13 +22,13 @@ object Notes {
 
   def allNotes: Array[Note] = {
     var buffer = new ArrayBuffer[Note]()
-    for (tone <- allTonesSharp.dropRight(1))
-      for (duration <- allDurations)
+    for (tone <- allTonesSharp)
+//      for (duration <- allDurations)
           for (octave <- allOctaves)
-            buffer += new Note(tone, octave, duration)
+            buffer += new Note(tone, octave/*, duration*/)
     buffer.toArray
   }
 
-  def allNotesAndRests: Array[Note] = allNotes //++ allRests
+//  def allNotesAndRests: Array[Note] = allNotes ++ allRests
 
 }

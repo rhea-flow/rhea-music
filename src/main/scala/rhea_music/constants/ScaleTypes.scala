@@ -1,7 +1,7 @@
 package rhea_music.constants
 
 import rhea_music.ImplicitConversions._
-import rhea_music.music_types.Interval
+import rhea_music.constants.Intervals.Intervals
 
 /**
   * @author Orestis Melkonian
@@ -10,7 +10,7 @@ import rhea_music.music_types.Interval
 object ScaleTypes {
 
   // Type alias
-  type ScaleType = Array[Interval]
+  type ScaleType = Intervals
 
   // Constants
   val major: ScaleType = "2 3 4 5 6 7"

@@ -12,18 +12,18 @@ import rhea_music.util.Random.randNote
 /**
   * @author Orestis Melkonian
   */
-class Note(var tone: Tone = C,
+class Note(var root: Tone = C,
            var octave: Octave = noOctave,
-           var duration: Duration = quarter
+           var duration: Duration = noDuration
           ) extends MusicString {
 
-  override def repr: String = tone + (if (octave == noOctave) "" else octave) + duration
+  override var repr: String = root + (if (octave == noOctave) "" else octave) + duration
 
   def clean: Note = {
     octave = noOctave
     duration = noDuration
-    if (tone.mod == n)
-      tone.mod = noNoteMod
+    if (root.mod == n)
+      root.mod = noNoteMod
     this
   }
 

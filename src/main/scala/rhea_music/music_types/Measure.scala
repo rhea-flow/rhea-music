@@ -5,7 +5,7 @@ package rhea_music.music_types
   */
 class Measure(val music: MusicString*) extends MusicString {
 
-  override def repr: String = music.map(_.repr).mkString(" | ")
+  override var repr: String = music.map(_.repr).mkString(" | ")
 
   def +(that: Measure): Measure =
     new Measure(this.music ++ that.music:_*)

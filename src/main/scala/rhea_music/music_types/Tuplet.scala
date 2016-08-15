@@ -10,7 +10,7 @@ class Tuplet(val ratio: Ratio,
              val notes: Note*
             ) extends MusicString {
 
-  override def repr: String = {
+  override var repr: String = {
     val length = ratio.split(":").map(_.toInt)
     assert(notes.length == length(0))
 

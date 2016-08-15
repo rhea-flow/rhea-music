@@ -2,7 +2,7 @@ package rhea_music.constants
 
 import rhea_music.constants.Notes.allNotes
 import rhea_music.constants.ChordTypes.{allChordTypes, getNumberOfInversions}
-import rhea_music.music_types.{Chord, Note}
+import rhea_music.music_types.{Chord, Note, Scale}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -21,13 +21,13 @@ object Chords {
     buffer.toArray
   }
 
-  /*def constraintChords(notes: Array[Note]): Array[Chord] = {
+  def constraintChords(scale: Scale): Array[Chord] = {
     val chords = allChords filter ((c: Chord) => {
       for (n: Note <- c.getNotes)
-        if (!(notes contains n))
+        if (!(scale.getNotes contains n))
           false
       true
     })
     chords
-  }*/
+  }
 }

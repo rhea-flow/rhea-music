@@ -1,21 +1,23 @@
 package rhea_music.music_streams
 
 import rhea_music.ImplicitConversions._
+
 import scala_wrapper.ImplicitConversions._
 import scala.languageFeature.implicitConversions._
-
 import java.io.File
+
 import org.jfugue.midi.MidiFileManager
 import org.jfugue.pattern.{Pattern, PatternProducer}
 import org.jfugue.player.Player
 import org.jfugue.realtime.RealtimePlayer
 import org.rhea_core.Stream
+import org.rhea_core.util.functions.Func2
 import rhea_music.music_types.MusicString
 
 /**
   * @author Orestis Melkonian
   */
-class MusicStream(val stream: Stream[_ <: MusicString]) {
+class MusicStream(val _stream: Stream[_ <: MusicString]) {
 
 //  def set(setter: Pattern => Pattern) =
 //    stream.map[PatternProducer]((p: PatternProducer) => {
@@ -32,23 +34,27 @@ class MusicStream(val stream: Stream[_ <: MusicString]) {
 //
 //  def setTempo(tempo: String): MusicStream = set(_.setTempo(tempo))
 //
-//  def accumulate(): MusicStream =
-//    stream.reduce(new Pattern(): Pattern, (pat: Pattern, p: PatternProducer) => {
-//      pat.add(p)
-//      pat
-//    }).cast[PatternProducer](classOf[PatternProducer])
-//
-//  def writeMidi(filename: String): Unit = {
-//    println("Writing MIDI file...")
-//    stream.accumulate().subscribe((p: PatternProducer) => {
-//      MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"))
-//      println("Done [" + filename + ".midi" + "]")
-//    })
-//  }
+def ||(that: MusicStream): MusicStream =
+  Stream.zip[MusicString, MusicString, MusicString](
+    this, that,
+    (s1: MusicString, s2: MusicString) => s1 || s2
+  )
 
-  def play() = stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
+  def accumulate(): MusicStream =
+    _stream.reduce("": MusicString, (s1: MusicString, s2: MusicString) => s1 ++ s2)
 
-  def playFinal() = stream.subscribe((s: MusicString) => MusicStream.player.play(s))
+  def writeMidi(filename: String): Unit = {
+    println("Writing MIDI file...")
+    _stream.accumulate().subscribe((p: MusicString) => {
+      println(p.repr)
+      MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"))
+      println("Done [" + filename + ".midi" + "]")
+    })
+  }
+
+  def play() = _stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
+
+  def playFinal() = _stream.subscribe((s: MusicString) => MusicStream.player.play(s))
 
 }
 

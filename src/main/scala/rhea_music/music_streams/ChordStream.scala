@@ -1,23 +1,27 @@
 package rhea_music.music_streams
 
-import org.jfugue.pattern.{Pattern, PatternProducer}
 import rhea_music.ImplicitConversions._
+
+import scala_wrapper.ImplicitConversions._
 import org.rhea_core.Stream
-import rhea_music.music_types.Chord
+import rhea_music.constants.Chords
+import rhea_music.constants.Durations.Duration
+import rhea_music.music_types.{Chord, MusicString}
 
 /**
   * @author Orestis Melkonian
   */
-class ChordStream(val stream: Stream[Chord]) {
+class ChordStream(val stream: Stream[Chord]) extends MusicStream(stream) {
 
-  /*def setDuration(durationStream: DurationStream): MusicStream = {
-    Stream.zip[Chord, String, PatternProducer](
+  def setDuration(durationStream: DurationStream): ChordStream =
+    Stream.zip[Chord, Duration, Chord](
       stream,
       durationStream,
-      (c: Chord, d: String) =>
-        new Pattern(c.toString + d).asInstanceOf[PatternProducer]: PatternProducer
+      (c: Chord, d: Duration) => {
+        c.duration = d
+        c
+      }
     )
-  }*/
 }
 
 

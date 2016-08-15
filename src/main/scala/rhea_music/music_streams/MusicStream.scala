@@ -1,7 +1,7 @@
 package rhea_music.music_streams
 
 import rhea_music.ImplicitConversions._
-import scala_dsl.ImplicitConversions._
+import scala_wrapper.ImplicitConversions._
 import scala.languageFeature.implicitConversions._
 
 import java.io.File

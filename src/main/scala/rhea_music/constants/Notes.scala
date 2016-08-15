@@ -13,23 +13,22 @@ import scala.collection.mutable.ArrayBuffer
   */
 object Notes {
 
-  def allRests: Array[Note] = {
+  /*def allRests: Array[Note] = {
     var buffer = new ArrayBuffer[Note]()
     for (duration <- allDurations)
       buffer += new Note(tone = R, duration = duration)
     buffer.toArray
-  }
+  }*/
 
   def allNotes: Array[Note] = {
     var buffer = new ArrayBuffer[Note]()
-    for (tone <- allTones.dropRight(1))
+    for (tone <- allTonesSharp.dropRight(1))
       for (duration <- allDurations)
-        for (noteMod <- allNoteMods)
           for (octave <- allOctaves)
-            buffer += new Note(tone, noteMod, octave, duration)
+            buffer += new Note(tone, octave, duration)
     buffer.toArray
   }
 
-  def allNotesAndRests: Array[Note] = allNotes ++ allRests
+  def allNotesAndRests: Array[Note] = allNotes //++ allRests
 
 }

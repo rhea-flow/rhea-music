@@ -1,23 +1,23 @@
 package rhea_music.music_types
 
-import rhea_music.constants.NoteMods.{NoteMod, getDelta}
-import rhea_music.constants.Tones.Tone
+import rhea_music.constants.NoteMods.{NoteMod, getDelta, noNoteMod}
 
 /**
   * @author Orestis Melkonian
   */
-class Interval(var halfsteps: Int, var mod: NoteMod) {
+class Interval(var degree: Int, var mod: NoteMod = noNoteMod) {
 
-  def getHalfsteps: Int =
-    halfsteps + getDelta(mod)
-
-  def getTone(tone: Tone): Tone = ??? // TODO Note::transpose
-}
-
-object Interval {
-
-  implicit def stringToInterval(s: String): Interval = new Interval(s.take(1).toInt, s.drop(1))
-
-  implicit def stringsToIntervals(s: String): Array[Interval]= s.split(" ").map(i => stringToInterval(i))
+  // TODO get enharmonic
+  def getOffset: Int =
+    degree match {
+      case 1 => 0
+      case 2 => 2
+      case 3 => 4
+      case 4 => 5
+      case 5 => 7
+      case 6 => 9
+      case 7 => 11
+    }
+    + getDelta(mod)
 
 }

@@ -3,7 +3,6 @@ package rhea_music.music_types
 import rhea_music.ImplicitConversions._
 
 import rhea_music.constants.ChordTypes.ChordType
-import rhea_music.constants.Tones.Tone
 import rhea_music.music_streams.MusicStream
 import rhea_music.util.Random.randChord
 

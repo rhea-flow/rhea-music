@@ -1,13 +1,14 @@
 import rhea_music.ImplicitConversions._
-import scala.languageFeature.implicitConversions._
 
+import scala_wrapper.ImplicitConversions._
+import scala.languageFeature.implicitConversions._
 import org.junit.{Before, Test}
 import org.rhea_core.Stream
 import org.rhea_core.internal.graph.FlowGraph
 import rhea_music.music_streams.MusicStream
 import rx_eval.RxjavaEvaluationStrategy
 import test_data.utilities.Threads
-import rhea_music.music_types.{Chord, Note}
+import rhea_music.music_types.{Chord, Note, Scale}
 import rhea_music.constants.Chords.allChords
 
 /**
@@ -29,10 +30,8 @@ class Adhoc {
     h.writeMidi("harmony")*/
   }
 
-  @Test
+//  @Test
   def init() = {
-    MusicStream.player.play("Cdom7b5")
-
     // TODO add collection implicits
     /*Stream.from(allChords.toIterable).subscribe((c: Chord) => {
       println(c)
@@ -41,18 +40,24 @@ class Adhoc {
 
     val s: MusicStream =
 //      Note.randNotes
-      Chord.randChords
+      Chord.randChords.take(100)
 
-//    s.play()
+    s.play()
 
     Threads.sleep()
   }
 
-//  @Test
+  @Test
   def scale() = {
-    /*val scale = new Scale(new Intervals("1 2 3 4 5 6 7"))
-    scale.setName("A")
-    println(scale.toString)*/
+    import rhea_music.constants.Tones._
+    import rhea_music.constants.ScaleTypes._
+
+    val scale = new Scale(Ab, none)
+    val notes = scale.getNotes
+    val s = Stream.just(notes(0), notes(1), notes(2), notes(3), notes(4), notes(5), notes(6))
+    s.play()
+
+    Threads.sleep()
   }
 
 //  @Test

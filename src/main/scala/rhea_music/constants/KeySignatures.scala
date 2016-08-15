@@ -23,11 +23,11 @@ object KeySignatures {
     // Flat keys
     buffer += new KeySignature(major, new Note(tone = F, duration = noDuration))
     buffer += new KeySignature(major, new Note(tone = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = E, mod = b, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = A, mod = b, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = D, mod = b, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = G, mod = b, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = C, mod = b, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Eb, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Ab, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Db, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Gb, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Cb, duration = noDuration))
 
     // Sharp keys
     buffer += new KeySignature(major, new Note(tone = G, duration = noDuration))
@@ -35,8 +35,8 @@ object KeySignatures {
     buffer += new KeySignature(major, new Note(tone = A, duration = noDuration))
     buffer += new KeySignature(major, new Note(tone = E, duration = noDuration))
     buffer += new KeySignature(major, new Note(tone = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = F, mod = s, duration = noDuration))
-    buffer += new KeySignature(major, new Note(tone = C, mod = s, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Fs, duration = noDuration))
+    buffer += new KeySignature(major, new Note(tone = Cs, duration = noDuration))
 
     buffer.toArray
   }

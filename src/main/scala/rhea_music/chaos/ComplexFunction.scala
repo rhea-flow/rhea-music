@@ -1,6 +1,6 @@
 package rhea_music.chaos
 
-import scala_dsl.ImplicitConversions._
+import scala_wrapper.ImplicitConversions._
 import org.rhea_core.util.functions.Func1
 
 /**

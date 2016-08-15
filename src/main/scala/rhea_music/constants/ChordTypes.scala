@@ -39,28 +39,22 @@ object ChordTypes {
   val m13 = "min13"
   val _13 = "dom13"
 
-  val _7b5 = "dom7<5"
-  val _7s5 = "dom7>5"
-  val _7b5b9 = "dom7<5<9"
-  val _7b5s9 = "dom7<5>9"
-  val _7s5b9 = "dom7>5<9"
-  val _7s5s9 = "dom7>5>9"
+  val _7b5 = "dom7b5"
+  val _7s5 = "dom7s5"
 
-  val M7b5 = "maj7<5"
-  val M7s5 = "maj7>5"
+  val M7b5 = "maj7b5"
+  val M7s5 = "maj7s5"
   val mM7 = "minmaj7"
 
   // Array collection
   def allChordTypes: Array[ChordType] = Array(
     M, m, aug, dim, sus4, sus2, M7, m7, _7, dim7, M6, m6, M9, m9, _9, add9, m11, _11,
-    M13, m13, _13, _7b5, _7s5, _7b5b9, _7b5s9, _7s5b9, _7s5s9, M7b5, M7s5, mM7
+    M13, m13, _13, _7b5, _7s5, M7b5, M7s5, mM7
   )
 
   def getNumberOfInversions(chordType: ChordType): Int = chordType match {
     case `M` | `m` | `aug` | `dim` | `sus4` | `sus2` => 3
-    case `M7` | `m7` | `_7` | `dim7` | `M6` | `m6` | `add9`
-         | `_7b5` | `_7s5` | `M7b5` | `M7s5` | `mM7` => 4
-    case `M9` | `m9` | `_9` | `m11` | `_11` | `M13` | `m13` | `_13`
-         | `_7b5b9` | `_7b5s9` | `_7s5b9` | `_7s5s9`  => 5
+    case `M7` | `m7` | `_7` | `dim7` | `M6` | `m6` | `add9` | `_7b5` | `_7s5` | `M7b5` | `M7s5` | `mM7` => 4
+    case `M9` | `m9` | `_9` | `m11` | `_11` | `M13` | `m13` | `_13` => 5
   }
 }

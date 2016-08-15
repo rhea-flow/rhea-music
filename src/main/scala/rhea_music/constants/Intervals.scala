@@ -12,9 +12,9 @@ object Intervals {
 
   def allIntervals: Array[Interval] = {
     var buffer = new ArrayBuffer[Interval]()
-    for (halfsteps <- 1 to 15)
+    for (degrees <- 1 to 7)
       for (mod <- Seq(noNoteMod, s, b))
-        buffer += new Interval(halfsteps, mod)
+        buffer += new Interval(degrees, mod)
     buffer.toArray
   }
 

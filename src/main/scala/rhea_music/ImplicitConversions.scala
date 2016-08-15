@@ -3,7 +3,7 @@ package rhea_music
 import org.jfugue.pattern.Pattern
 import org.rhea_core.Stream
 import rhea_music.music_streams._
-import rhea_music.music_types.MusicString
+import rhea_music.music_types.{Interval, MusicString}
 import rhea_music.util.RichArray
 
 /**
@@ -11,13 +11,27 @@ import rhea_music.util.RichArray
  */
 package object ImplicitConversions {
 
-  implicit def stringToMusic(s: String): MusicString = new MusicString {override def repr: String = s}
-  implicit def _stringToMusic(s: MusicString): String = s.repr
-
+  // Patterns
   implicit def stringToPattern(s: String): Pattern = new Pattern(s)
   implicit def msToPattern(ms: MusicString): Pattern = new Pattern(ms.repr)
 
+  // Music strings
+  implicit def stringToMusic(s: String): MusicString = new MusicString {override def repr: String = s}
+  implicit def _stringToMusic(s: MusicString): String = s.repr
+
+  // Music streams
   implicit def musicStream[T <: MusicString](s: Stream[T]): MusicStream = new MusicStream(s)
+  implicit def _musicStream[T <: MusicString](s: MusicStream): Stream[_ <: MusicString] = s.stream
+
+  // Intervals
+  implicit def stringToInterval(s: String): Interval =
+    if (s.length > 1)
+      new Interval(s.drop(1).toInt, s.take(1))
+    else
+      new Interval(s.take(1).toInt)
+
+  implicit def stringsToIntervals(s: String): Array[Interval] =
+    s.split(" ").map(i => stringToInterval(i))
 
   // RichArrays
   implicit def enrichArray[T](a: Array[T]): RichArray[T] = new RichArray[T](a)

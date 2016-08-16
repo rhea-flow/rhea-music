@@ -10,16 +10,12 @@ import rhea_music.music_types.Note
   */
 class NoteStream(val stream: Stream[Note]) {
 
-  def setDuration(durationStream: DurationStream): MusicStream = {
+  def setDuration(durationStream: DurationStream): MusicStream =
     Stream.zip[Note, Duration, Note](
-      stream,
-      durationStream,
-      (n: Note, d: Duration) => {
-        n.duration = d
-        n
-      }
+      stream, durationStream,
+      (n: Note, d: Duration) => n.clone(duration = d)
     )
-  }
+
 }
 
 object NoteStream {

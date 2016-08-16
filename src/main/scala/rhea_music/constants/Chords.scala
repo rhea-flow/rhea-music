@@ -11,6 +11,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 object Chords {
 
+  // TODO Constants
 
   def allChords: Array[Chord] = {
     var buffer = new ArrayBuffer[Chord]()

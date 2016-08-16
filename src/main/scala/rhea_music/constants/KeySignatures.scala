@@ -2,42 +2,36 @@ package rhea_music.constants
 
 import rhea_music.music_types.{KeySignature, Note}
 import rhea_music.constants.Tones._
-import rhea_music.constants.NoteMods.{s, b}
-import rhea_music.constants.KeySignatureTypes.{major, minor}
-import rhea_music.constants.Durations.noDuration
-
-import scala.collection.mutable.ArrayBuffer
+import rhea_music.constants.KeySignatureTypes.major
 
 /**
   * @author Orestis Melkonian
   */
 
 object KeySignatures {
-  
 
-  def allKeySignatures: Array[KeySignature] = {
-    var buffer = new ArrayBuffer[KeySignature]()
+  /**
+    * Constants
+    */
+  // Flat
+  val Cmajor = new KeySignature(major, C)
+  val Fmajor = new KeySignature(major, F)
+  val Bmajor = new KeySignature(major, B)
+  val Ebmajor = new KeySignature(major, Eb)
+  val Abmajor = new KeySignature(major, Ab)
+  val Dbmajor = new KeySignature(major, Db)
+  val Gbmajor = new KeySignature(major, Gb)
+  val Cbmajor = new KeySignature(major, Cb)
+  // Sharp
+  val Gmajor = new KeySignature(major, G)
+  val Dmajor = new KeySignature(major, D)
+  val Amajor = new KeySignature(major, A)
+  val Emajor = new KeySignature(major, E)
+  val Fsmajor = new KeySignature(major, Fs)
+  val Csmajor = new KeySignature(major, Cs)
 
-    buffer += new KeySignature(major, new Note(root = C, duration = noDuration))
-    
-    // Flat keys
-    buffer += new KeySignature(major, new Note(root = F, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Eb, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Ab, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Db, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Gb, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Cb, duration = noDuration))
-
-    // Sharp keys
-    buffer += new KeySignature(major, new Note(root = G, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = D, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = A, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = E, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = B, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Fs, duration = noDuration))
-    buffer += new KeySignature(major, new Note(root = Cs, duration = noDuration))
-
-    buffer.toArray
-  }
+  def allKeySignatures: Array[KeySignature] = Array(
+    Cmajor, Fmajor, Bmajor, Ebmajor, Abmajor, Dbmajor, Gbmajor, Cbmajor,
+    Gmajor, Dmajor, Amajor, Emajor, Bmajor, Fsmajor, Csmajor
+  )
 }

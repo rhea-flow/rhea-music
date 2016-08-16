@@ -2,6 +2,8 @@ install:
 	@./gradlew install
 update:
 	@./gradlew install --refresh-dependencies
+test:
+	@./gradlew test --tests Tester
 adhoc:
 	@./gradlew test --tests Adhoc
 idea:

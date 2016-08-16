@@ -15,7 +15,7 @@ import rhea_music.util.Random.randNote
 class Note(var root: Tone = C,
            var octave: Octave = noOctave,
            var duration: Duration = noDuration
-          ) extends MusicString {
+          ) extends MusicString with Cloneable {
 
   override var repr: String = root + (if (octave == noOctave) "" else octave) + duration
 
@@ -27,6 +27,8 @@ class Note(var root: Tone = C,
     this
   }
 
+  def clone(root: Tone = root, octave: Octave = octave, duration: Duration = duration): Note =
+    new Note(root, octave, duration)
 }
 
 object Note {

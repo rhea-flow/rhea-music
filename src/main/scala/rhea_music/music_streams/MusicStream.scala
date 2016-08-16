@@ -40,6 +40,9 @@ def ||(that: MusicStream): MusicStream =
     (s1: MusicString, s2: MusicString) => s1 || s2
   )
 
+  def extractString: String =
+    _stream.accumulate().toBlocking.first().repr.drop(1)
+
   def accumulate(): MusicStream =
     _stream.reduce("": MusicString, (s1: MusicString, s2: MusicString) => s1 ++ s2)
 

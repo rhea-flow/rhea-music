@@ -1,6 +1,6 @@
 package rhea_music.constants
 
-import rhea_music.music_types.Note
+import rhea_music.music_types.{Chord, Note, Scale, Tone}
 import rhea_music.constants.Tones._
 import rhea_music.constants.NoteMods._
 import rhea_music.constants.Octaves._
@@ -86,13 +86,24 @@ object Notes {
   val B9 = new Note(B, 9)
   
   def allNotes: Array[Note] = {
-    var buffer = new ArrayBuffer[Note]()
+    var ret = new ArrayBuffer[Note]()
     for (tone <- allTonesSharp)
-//      for (duration <- allDurations)
-          for (octave <- allOctaves)
-            buffer += new Note(tone, octave/*, duration*/)
-    buffer.toArray
+        for (octave <- allOctaves)
+          ret += new Note(tone, octave)
+    ret.toArray
   }
+
+  def constraintNotes(array: Array[Tone]): Array[Note] = {
+    var ret = new ArrayBuffer[Note]()
+    for (tone <- array)
+      for (octave <- allOctaves)
+        ret += new Note(tone, octave)
+    ret.toArray
+  }
+
+  def constraintNotes(scale: Scale): Array[Note] = constraintNotes(scale.getTones)
+
+  def constraintNotes(chord: Chord): Array[Note] = constraintNotes(chord.getTones)
 
   /*def allRests: Array[Note] = {
     var buffer = new ArrayBuffer[Note]()

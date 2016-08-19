@@ -7,7 +7,6 @@ import rhea_music.constants.NoteMods.{NoteMod, getDelta, noNoteMod}
   */
 class Interval(var degree: Int, var mod: NoteMod = noNoteMod) {
 
-  // TODO get enharmonic
   def getOffset: Int =
     degree match {
       case 1 | 8 => 0

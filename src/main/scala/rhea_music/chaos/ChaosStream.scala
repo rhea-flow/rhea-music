@@ -15,6 +15,8 @@ import rhea_music.music_types.{Chord, Interval, Note}
   */
 class ChaosStream(stream: Stream[Double], range: (Double, Double)) {
 
+  def print() = stream.toBlocking.toList.forEach(println)
+
   def mapTo[T](array: Array[T]): Stream[T] =
     stream.map[T]((x: Double) =>
       mapToArray(range._1, range._2, x, array)

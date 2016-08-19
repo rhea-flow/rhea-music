@@ -17,7 +17,10 @@ package object ImplicitConversions {
   implicit def msToPattern(ms: MusicString): Pattern = new Pattern(ms.repr)
 
   // Music strings
-  implicit def stringToMusic(s: String): MusicString = new MusicString {override var repr: String = s}
+  implicit def stringToMusic(s: String): MusicString = {
+    val str = s
+    new MusicString {override var repr: String = str}
+  }
   implicit def _stringToMusic(s: MusicString): String = s.repr
 
   // Music streams

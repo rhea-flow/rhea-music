@@ -3,6 +3,7 @@ package rhea_music.music_streams
 import rhea_music.ImplicitConversions._
 
 import scala_wrapper.ImplicitConversions._
+import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions._
 import java.io.File
 
@@ -34,14 +35,12 @@ class MusicStream(val _stream: Stream[_ <: MusicString]) {
 //
 //  def setTempo(tempo: String): MusicStream = set(_.setTempo(tempo))
 //
-def ||(that: MusicStream): MusicStream =
-  Stream.zip[MusicString, MusicString, MusicString](
-    this, that,
-    (s1: MusicString, s2: MusicString) => s1 || s2
-  )
+  def ||(that: MusicStream): MusicStream =
+    Stream.just(MusicString.merge(_stream.toBlocking.toList.asScala.toList))
+//    Stream.just(this.extractString, that.extractString).asInstanceOf[Stream[MusicString]]
 
   def extractString: String =
-    _stream.accumulate().toBlocking.first().repr.drop(1)
+    _stream.accumulate().toBlocking.first().repr//.drop(1)
 
   def accumulate(): MusicStream =
     _stream.reduce("": MusicString, (s1: MusicString, s2: MusicString) => s1 ++ s2)
@@ -57,7 +56,11 @@ def ||(that: MusicStream): MusicStream =
 
   def play() = _stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
 
+  def playTogether() = _stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
+
   def playFinal() = _stream.subscribe((s: MusicString) => MusicStream.player.play(s))
+
+  def print() = println(extractString)
 
 }
 

@@ -8,7 +8,7 @@ import rhea_music.util.VoiceMinter
   *
   * @author Orestis Melkonian
   */
-trait MusicString extends PatternProducer {
+abstract class MusicString extends PatternProducer {
 
   // Staccato representation.
   var repr: String
@@ -16,19 +16,28 @@ trait MusicString extends PatternProducer {
   override def getPattern: Pattern = new Pattern(repr)
 
   def ++(that: MusicString): MusicString = {
-    this.repr = this.repr + " " + that.repr
+    repr += " " + that.repr
+    repr = repr.trim
     this
   }
 
   def ||(that: MusicString): MusicString = {
-    val v1 = VoiceMinter.nextVoice
-    val v2 = VoiceMinter.nextVoice
-    this.wrap(v1) ++ this.wrap(v2)
+    this.repr =
+      (VoiceMinter.nextVoice |> this.repr) + " " +
+      (VoiceMinter.nextVoice |> that.repr)
+    this
   }
 
-  def wrap(wrapper: Wrapper[_]): MusicString =
-    new MusicString {
-      override var repr: String = wrapper.wrap + " " + this.repr
-    }
+  override def toString = repr
+}
 
+object MusicString {
+  def merge(strings: List[MusicString]): MusicString = {
+    var tmp = ""
+    for (s <- strings)
+      tmp += VoiceMinter.nextVoice |> s.repr
+    new MusicString {
+      override var repr: String = tmp
+    }
+  }
 }

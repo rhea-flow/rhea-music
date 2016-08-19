@@ -24,7 +24,7 @@ class Chord(var note: Note,
       else "^" * inversion
     ) + duration
 
-  def getNotes: Array[Note] = Intervals.getNotes(note.root, chordToIntervals.get(chordType).get)
+  def getTones: Array[Tone] = Intervals.getTones(note.root, chordToIntervals.get(chordType).get)
 
 }
 

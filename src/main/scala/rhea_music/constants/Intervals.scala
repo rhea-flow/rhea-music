@@ -21,19 +21,19 @@ object Intervals {
     buffer.toArray
   }
 
-  def getNotes(tone: Tone, intervals: Intervals): Array[Note] = {
+  def getTones(tone: Tone, intervals: Intervals): Array[Tone] = {
     tone.clear()
 
-    var notes = new ArrayBuffer[Note]()
-    notes += new Note(tone)
+    var ret = new ArrayBuffer[Tone]()
+    ret += tone
 
-    val tones = if (tone.mod == b) allTonesFlat else allTonesSharp
+    val tones = if (tone.mod == b) allTonesFlat else allTonesSharp // FIXME smart check
     val root = tones.indexOf(tone)
 
     for (interval <- intervals)
-      notes += new Note(tones((root + interval.getOffset) % tones.length))
+      ret += tones((root + interval.getOffset) % tones.length)
 
-    notes.toArray
+    ret.toArray
   }
 
 }

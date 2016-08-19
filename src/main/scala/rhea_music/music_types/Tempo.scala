@@ -1,14 +1,12 @@
 package rhea_music.music_types
 
-import rhea_music.constants.Tempos.TempoType
-
 /**
   * @author Orestis Melkonian
   */
 
-class wTempo(override val t: TempoType) extends Wrapper[TempoType](t) {
+class Tempo(val tempo: Int) extends Wrapper {
 
-  override def wrap = t => "T" + t
+  override def |>(s: String) = "T" + tempo + " " + s
 }
 
 

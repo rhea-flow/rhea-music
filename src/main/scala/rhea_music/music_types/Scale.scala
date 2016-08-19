@@ -8,7 +8,7 @@ import rhea_music.constants.ScaleTypes.ScaleType
   */
 class Scale(var tone: Tone, scaleType: ScaleType) extends MusicString {
 
-  def getNotes: Array[Note] = Intervals.getNotes(tone, scaleType)
+  def getTones: Array[Tone] = Intervals.getTones(tone, scaleType)
 
-  override var repr: String = getNotes.map(_.repr).mkString(" ")
+  override var repr: String = getTones.map(_.repr).mkString(" ")
 }

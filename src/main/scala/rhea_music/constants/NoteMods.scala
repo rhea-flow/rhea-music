@@ -21,7 +21,7 @@ object NoteMods {
 
 
   def getDelta(noteMod: NoteMod): Int = noteMod match {
-    case `noteMod` | `n` => 0
+    case `noNoteMod` | `n` => 0
     case `s` => 1
     case `ss` => 2
     case `b` => -1

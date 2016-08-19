@@ -11,6 +11,11 @@ class Tone(var base: Char = 'C',
 
   override var repr: String = base + mod
 
+  override def equals(o: Any) = o match {
+    case that: Tone => (base == that.base) && (mod == that.mod)
+    case _ => false
+  }
+
   def clear() = {
     if (mod == n)
       mod = noNoteMod

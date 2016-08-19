@@ -10,10 +10,11 @@ import rhea_music.chaos.{ChaosStream, ComplexFunction}
 import rhea_music.music_streams.MusicStream
 import rx_eval.RxjavaEvaluationStrategy
 import test_data.utilities.Threads
-import rhea_music.music_types.{Chord, Note, Scale}
-import rhea_music.constants.Chords.{allChords, constraintChords}
-import rhea_music.constants.ScaleTypes.major
-import rhea_music.constants.Tones.Ab
+import rhea_music.music_types.{Chord, MusicString, Note, Scale}
+import rhea_music.constants.Chords._
+import rhea_music.constants.Notes._
+import rhea_music.constants.ScaleTypes._
+import rhea_music.constants.Tones._
 import rhea_music.constants.Durations.basicDurations
 
 /**
@@ -27,36 +28,44 @@ class Adhoc {
     Stream.optimizationStrategy = (graph: FlowGraph) => ()
   }
 
-  @Test
+//  @Test
   def rand() = {
-    val s: MusicStream = Chord.randChords.take(100)
-    val s2: MusicStream = Note.randNotes.take(100)
-
-    (s || s2).writeMidi("rand")
-
-    Threads.sleep()
+    val s: MusicStream = Chord.randChords.take(10)
+    val s2: MusicStream = Note.randNotes.take(10)
+    println (s.extractString || s2.extractString)
   }
 
-//    @Test
-  def harmony(): Unit = {
+  @Test
+  def melodies(): Unit = {
+    val CM = new Scale(C, major)
+
     val (s1, s2) = ChaosStream.from(ComplexFunction.f3(1.4, 0.3), 100)
-    val AbMajor = new Scale(Ab, major)
-    val h = s1.mapTo[Chord](constraintChords(AbMajor))
+    val m1 = s1.mapTo[Note](constraintNotes(CM))
               .setDuration(s2.mapTo[String](basicDurations))
-    h.writeMidi("harmony")
+
+    val (s3, s4) = ChaosStream.from(ComplexFunction.f3(1.41, 0.31), 100)
+    val m2 = s3.mapTo[Note](constraintNotes(CM))
+               .setDuration(s4.mapTo[String](basicDurations))
+
+    Stream.just(m1.extractString || m2.extractString)
+//      .play()
+      .writeMidi("melodies")
 
     Threads.sleep()
   }
 
 //  @Test
-  def scale() = {
-    import rhea_music.constants.Tones._
-    import rhea_music.constants.ScaleTypes._
+  def duet(): Unit = {
+    val (s1, s2) = ChaosStream.from(ComplexFunction.f3(1.4, 0.3), 100)
+    val EbMinor = new Scale(Eb, minor)
+    val h = s1.mapTo[Chord](constraintChords(EbMinor))
+              .setDuration(s2.mapTo[String](basicDurations))
 
-    val scale = new Scale(Ab, none)
-    val notes = scale.getNotes
-    val s: Stream[Note] = Stream.from(notes.toIterable.asJava)
-    s.play()
+    val (s3, s4) = ChaosStream.from(ComplexFunction.f3(1.4, 0.3), 100)
+    val m = s1.mapTo[Note](constraintNotes(EbMinor))
+              .setDuration(s4.mapTo[String](basicDurations))
+
+    (m || h).writeMidi("harmony")
 
     Threads.sleep()
   }

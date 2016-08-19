@@ -5,8 +5,7 @@ import rhea_music.constants.KeySignatureTypes.KeySignatureType
 /**
   * @author Orestis Melkonian
   */
-class KeySignature(override val t: KeySignatureType, var tone: Tone)
-  extends Wrapper[KeySignatureType](t) {
+class KeySignature(val key: KeySignatureType, var tone: Tone) extends Wrapper{
 
-  override def wrap = sth => "K" + tone.repr + t + " " + sth
+  override def |>(s: String) = "K" + tone.repr + key + " " + s
 }

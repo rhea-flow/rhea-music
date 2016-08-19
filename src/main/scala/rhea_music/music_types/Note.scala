@@ -29,6 +29,14 @@ class Note(var root: Tone = C,
 
   def clone(root: Tone = root, octave: Octave = octave, duration: Duration = duration): Note =
     new Note(root, octave, duration)
+
+  override def equals(o: Any) = o match {
+    case that: Note =>
+      (root == that.root) &&
+      (octave == that.octave) &&
+      (duration == that.duration)
+    case _ => false
+  }
 }
 
 object Note {

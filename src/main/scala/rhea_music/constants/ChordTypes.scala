@@ -11,7 +11,6 @@ object ChordTypes {
 
   // Type alias
   type ChordType = String
-
   // Constants
   val M = "maj"
   val m = "min"
@@ -56,7 +55,7 @@ object ChordTypes {
 
   def getNumberOfInversions(chordType: ChordType): Int =
     chordToIntervals.get(chordType).get.length
-  
+
   val chordToIntervals: Map[ChordType, Intervals] = Map(
     M -> "3 5",
     m -> "b3 5",
@@ -94,3 +93,4 @@ object ChordTypes {
     mM7 -> "b3 5 7"
   )
 }
+

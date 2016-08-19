@@ -7,6 +7,6 @@ class Measure(val music: MusicString*) extends MusicString {
 
   override var repr: String = music.map(_.repr).mkString(" | ")
 
-  def +(that: Measure): Measure =
+  def |(that: Measure): Measure =
     new Measure(this.music ++ that.music:_*)
 }

@@ -9,15 +9,17 @@ import rhea_music.constants.NoteMods._
 object Tones {
 
   // Constants
-  val Cb = new Tone('C', b)
   val C = new Tone('C')
-	val Cs = new Tone('C', s)
+  val Cb = new Tone('C', b)
+  val Cs = new Tone('C', s)
   val D = new Tone('D')
 	val Db = new Tone('D', b)
 	val Ds = new Tone('D', s)
   val E = new Tone('E')
 	val Eb = new Tone('E',  b)
+  val Es = new Tone('E',  s)
   val F = new Tone('F')
+  val Fb = new Tone('F', b)
 	val Fs = new Tone('F', s)
   val G = new Tone('G')
 	val Gb = new Tone('G', b)
@@ -27,6 +29,7 @@ object Tones {
 	val As = new Tone('A', s)
   val B = new Tone('B')
 	val Bb = new Tone('B', b)
+  val Bs = new Tone('B', s)
 
 //  val REST = new Tone('R')
 
@@ -46,8 +49,8 @@ object Tones {
     Db, D,
     Eb, E,
     F,
-    Gb,G,
-    Ab,A,
+    Gb, G,
+    Ab, A,
     Bb, B
   )
 }

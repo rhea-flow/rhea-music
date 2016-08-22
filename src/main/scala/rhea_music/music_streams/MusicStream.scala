@@ -1,6 +1,6 @@
 package rhea_music.music_streams
 
-import rhea_music.ImplicitConversions._
+import rhea_music.util.ImplicitConversions._
 
 import scala_wrapper.ImplicitConversions._
 import scala.collection.JavaConverters._
@@ -8,39 +8,36 @@ import scala.languageFeature.implicitConversions._
 import java.io.File
 
 import org.jfugue.midi.MidiFileManager
-import org.jfugue.pattern.{Pattern, PatternProducer}
 import org.jfugue.player.Player
 import org.jfugue.realtime.RealtimePlayer
 import org.rhea_core.Stream
-import org.rhea_core.util.functions.Func2
-import rhea_music.music_types.MusicString
+import rhea_music.music_types.{MusicString, Voice, Wrapper}
+import rhea_music.util.VoiceMinter
 
 /**
   * @author Orestis Melkonian
   */
 class MusicStream(val _stream: Stream[_ <: MusicString]) {
 
-//  def set(setter: Pattern => Pattern) =
-//    stream.map[PatternProducer]((p: PatternProducer) => {
-//      setter(p.getPattern)
-//    })
-//
-//  def setVoice(voice: Int): MusicStream = set(_.setVoice(voice))
-//
-//  def setInstrument(instr: Int): MusicStream = set(_.setInstrument(instr))
-//
-//  def setInstrument(instr: String): MusicStream = set(_.setInstrument(instr))
-//
-//  def setTempo(tempo: Int): MusicStream = set(_.setTempo(tempo))
-//
-//  def setTempo(tempo: String): MusicStream = set(_.setTempo(tempo))
-//
-  def ||(that: MusicStream): MusicStream =
-    Stream.just(MusicString.merge(_stream.toBlocking.toList.asScala.toList))
-//    Stream.just(this.extractString, that.extractString).asInstanceOf[Stream[MusicString]]
+  var context: List[Wrapper] = List() // TODO
+
+  def set(wrapper: Wrapper) =
+    context = context :+ wrapper
+
+  def setVoice(voice: Voice): MusicStream =
+    Stream.concat(
+      Stream.just(voice),
+      _stream
+    )
+
+  def ||(that: MusicStream): MusicStream = {
+    val v1 = VoiceMinter.nextVoice
+    val v2 = VoiceMinter.nextVoice
+    Stream.concat(setVoice(v1), that.setVoice(v2))
+  }
 
   def extractString: String =
-    _stream.accumulate().toBlocking.first().repr//.drop(1)
+    _stream.accumulate().toBlocking.first().repr
 
   def accumulate(): MusicStream =
     _stream.reduce("": MusicString, (s1: MusicString, s2: MusicString) => s1 ++ s2)

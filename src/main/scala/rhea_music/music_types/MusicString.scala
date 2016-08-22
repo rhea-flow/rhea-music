@@ -32,12 +32,4 @@ abstract class MusicString extends PatternProducer {
 }
 
 object MusicString {
-  def merge(strings: List[MusicString]): MusicString = {
-    var tmp = ""
-    for (s <- strings)
-      tmp += VoiceMinter.nextVoice |> s.repr
-    new MusicString {
-      override var repr: String = tmp
-    }
-  }
 }

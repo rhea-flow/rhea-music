@@ -7,8 +7,8 @@ import rhea_music.constants.NoteMods.{NoteMod, getDelta, noNoteMod}
   */
 class Interval(var degree: Int, var mod: NoteMod = noNoteMod) {
 
-  def getOffset: Int =
-    degree match {
+  def getOffset: Int = {
+    val base = degree match {
       case 1 | 8 => 0
       case 2 | 9 => 2
       case 3 => 4
@@ -17,6 +17,8 @@ class Interval(var degree: Int, var mod: NoteMod = noNoteMod) {
       case 6 | 13 => 9
       case 7 => 11
     }
-    + getDelta(mod)
+    base + getDelta(mod)
+  }
 
+  override def toString = degree + mod
 }

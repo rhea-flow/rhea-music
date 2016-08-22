@@ -1,6 +1,6 @@
 package rhea_music.music_streams
 
-import rhea_music.ImplicitConversions._
+import rhea_music.util.ImplicitConversions._
 import org.rhea_core.Stream
 import rhea_music.constants.Intervals.Intervals
 

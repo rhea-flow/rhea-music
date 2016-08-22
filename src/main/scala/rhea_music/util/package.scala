@@ -1,5 +1,7 @@
 package rhea_music
 
+import org.rhea_core.Stream
+
 /**
   * @author Orestis Melkonian
   */
@@ -34,5 +36,38 @@ package object util {
     val index = mapRange(inputMin, inputMax, 0, array.length - 1, x).toInt
     array(index)
   }
+
+  /**
+    * Finds min/max of a list.
+    *
+    * @param l the list of numbers
+    * @return a tuple (min, max)
+    */
+  def listRange(l: List[Double]): (Double, Double) =
+    (listMin(l), listMax(l))
+
+  def arrayRange(a: Array[Double]) = listRange(a.toList)
+
+  /**
+    * Finds min of a list.
+    *
+    * @param l the list of numbers
+    * @return the minimum number
+    */
+  def listMin(l: List[Double]) =
+    l.foldLeft(l.head) {
+      case (min, e) => math.min(min, e)
+    }
+
+  /**
+    * Finds max of a list.
+    *
+    * @param l the list of numbers
+    * @return the maximum number
+    */
+  def listMax(l: List[Double]) =
+    l.foldLeft(l.head) {
+      case (max, e) => math.max(max, e)
+    }
 
 }

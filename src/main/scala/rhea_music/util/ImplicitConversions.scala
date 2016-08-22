@@ -1,16 +1,21 @@
-package rhea_music
+package rhea_music.util
 
 import org.jfugue.pattern.Pattern
 import org.rhea_core.Stream
+import rhea_music.chaos.ChaosStream
 import rhea_music.constants.Intervals.Intervals
 import rhea_music.music_streams._
-import rhea_music.music_types.{Chord, Interval, MusicString, Note}
-import rhea_music.util.RichArray
+import rhea_music.music_types._
 
 /**
  * @author Orestis Melkonian
  */
-package object ImplicitConversions {
+object ImplicitConversions {
+
+  // Scale -> Array[Tone]
+  implicit def scaleToTones(s: Scale): Array[Tone] = s.getTones
+  // Chord -> Array[Note]
+  implicit def chordToTones(c: Chord): Array[Tone] = c.getTones
 
   // Patterns
   implicit def stringToPattern(s: String): Pattern = new Pattern(s)
@@ -29,13 +34,17 @@ package object ImplicitConversions {
 
   // Intervals
   implicit def stringToInterval(s: String): Interval =
-    if (s.length > 1)
+    if (Array('b', '#', 'n') contains s.charAt(0))
       new Interval(s.drop(1).toInt, s.take(1))
     else
       new Interval(s.take(1).toInt)
 
   implicit def stringsToIntervals(s: String): Array[Interval] =
     s.split(" ").map(i => stringToInterval(i))
+
+  // Chaos
+//  implicit def chaosStream(s: Stream[Double]): ChaosStream = new ChaosStream(s, ???)
+//  implicit def _chaosStream(s: MusicStream): Stream[_ <: MusicString] = s._stream
 
   // RichArrays
   implicit def enrichArray[T](a: Array[T]): RichArray[T] = new RichArray[T](a)
@@ -44,23 +53,23 @@ package object ImplicitConversions {
   // Notes
   implicit def notifyStream(st: Stream[Note]): NoteStream = new NoteStream(st)
   implicit def _notifyStream(st: NoteStream): Stream[Note] = st.stream
-  implicit def _notes(st: NoteStream): MusicStream = st.asInstanceOf[MusicStream]
+  implicit def _notes(st: NoteStream): MusicStream = new MusicStream(st.stream)
   // Chords
   implicit def chordifyStream(st: Stream[Chord]): ChordStream = new ChordStream(st)
   implicit def _chordifyStream(st: ChordStream): Stream[Chord] = st.stream
-//  implicit def _chords(st: ChordStream): MusicStream = st.asInstanceOf[MusicStream]
+  implicit def _chords(st: ChordStream): MusicStream = new MusicStream(st.stream)
   // Durations
   implicit def durifyStream(st: Stream[String]): DurationStream = new DurationStream(st)
   implicit def _durifyStream(st: DurationStream): Stream[String] = st.stream
-  implicit def _durations(st: DurationStream): MusicStream = st.asInstanceOf[MusicStream]
+//  implicit def _durations(st: DurationStream): MusicStream = new MusicStream(st.stream)
   // Interval
   implicit def intervalifyStream0(st: Stream[Interval]): IntervalStream = new IntervalStream(st)
   implicit def _intervalifyStream0(st: IntervalStream): Stream[Interval] = st.stream
-  implicit def _interval(st: IntervalStream): MusicStream = st.asInstanceOf[MusicStream]
+//  implicit def _interval(st: IntervalStream): MusicStream = new MusicStream(st.stream)
   // Intervals
   implicit def intervalifyStream(st: Stream[Intervals]): IntervalsStream = new IntervalsStream(st)
   implicit def _intervalifyStream(st: IntervalsStream): Stream[Intervals] = st.stream
-  implicit def _intervals(st: IntervalsStream): MusicStream = st.asInstanceOf[MusicStream]
+//  implicit def _intervals(st: IntervalsStream): MusicStream = new MusicStream(st.stream)
   /*// Rhythms
   implicit def rhythmifyStream(st: Stream[Rhythm]): RhythmStream = new RhythmStream(st)
   implicit def _rhythmifyStream(st: RhythmStream): Stream[Rhythm] = st.stream

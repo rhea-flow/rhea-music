@@ -1,6 +1,6 @@
 package rhea_music.constants
 
-import rhea_music.ImplicitConversions._
+import rhea_music.util.ImplicitConversions._
 import rhea_music.constants.Intervals.Intervals
 
 /**
@@ -11,6 +11,7 @@ object ChordTypes {
 
   // Type alias
   type ChordType = String
+
   // Constants
   val M = "maj"
   val m = "min"

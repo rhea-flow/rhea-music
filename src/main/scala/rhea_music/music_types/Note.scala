@@ -1,6 +1,6 @@
 package rhea_music.music_types
 
-import rhea_music.ImplicitConversions._
+import rhea_music.util.ImplicitConversions._
 
 import rhea_music.constants.Durations._
 import rhea_music.constants.Octaves._
@@ -37,6 +37,8 @@ class Note(var root: Tone = C,
       (duration == that.duration)
     case _ => false
   }
+
+  override def toString = repr
 }
 
 object Note {

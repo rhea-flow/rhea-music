@@ -21,6 +21,11 @@ object Octaves {
   val _8 = 8
   val _9 = 9
 
+  // Ranges
+  val low = 2 to 3 toArray
+  val mid = 3 to 4 toArray
+  val high = 4 to 5 toArray
+
   // Array collection
   def allOctaves: Array[Octave] = 0 to 9 toArray
 }

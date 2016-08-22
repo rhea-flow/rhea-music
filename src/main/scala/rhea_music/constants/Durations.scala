@@ -1,6 +1,6 @@
 package rhea_music.constants
 
-import rhea_music.ImplicitConversions._
+import rhea_music.util.ImplicitConversions._
 
 /**
   * @author Orestis Melkonian

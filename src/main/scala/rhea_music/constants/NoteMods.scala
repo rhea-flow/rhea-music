@@ -19,13 +19,13 @@ object NoteMods {
   // Array collection
   def allNoteMods: Array[NoteMod] = Array(s, ss, b, bb, n)
 
-
-  def getDelta(noteMod: NoteMod): Int = noteMod match {
-    case `noNoteMod` | `n` => 0
-    case `s` => 1
-    case `ss` => 2
-    case `b` => -1
-    case `bb` => -2
-  }
+  def getDelta(noteMod: NoteMod): Int =
+    noteMod match {
+      case `noNoteMod` | `n` => 0
+      case `s` => 1
+      case `ss` => 2
+      case `b` => -1
+      case `bb` => -2
+    }
 
 }

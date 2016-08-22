@@ -14,4 +14,5 @@ object VoiceMinter {
   def nextVoice: Voice =
     new Voice(counter.getAndIncrement())
 
+
 }

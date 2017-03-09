@@ -1,15 +1,12 @@
-import scala_dsl.ImplicitConversions._
-import rhea_music.ImplicitConversions._
-import jm.constants.Instruments._
 import jm.constants.Durations._
 import jm.music.data._
 import org.junit.{Before, Test}
 import org.rhea_core.Stream
-import jm.music.tools.ca.CellularAutomata
+import rhea_music.ImplicitConversions._
 import rhea_music.cellular_automata.{HarmonyMapper, HarmonyRange, CellularAutomata => CA}
-import rx_eval.RxjavaEvaluationStrategy
 import rhea_music.chaos.{ChaosStream, ChaoticFunction, ComplexFunction}
 import rhea_music.utils.constants.Chords._
+import rx_eval.RxjavaEvaluationStrategy
 import test_data.utilities.Threads
 
 
@@ -23,7 +20,7 @@ class Adhoc {
     Stream.evaluationStrategy = new RxjavaEvaluationStrategy
   }
 
-//  @Test
+  @Test
   def chaoticMelody() {
 
     val rhythm: Stream[Double] =
@@ -133,7 +130,7 @@ class Adhoc {
     Threads.sleep()
   }
 
-  @Test
+//  @Test
   def ca(): Unit = {
     val mapper: HarmonyMapper = new HarmonyMapper(
       new HarmonyRange(

@@ -218,7 +218,7 @@ class Tester {
 
   @Test
   def constraint_chords() =
-    constraintChords(constraintNotes(new Scale(A, minor))) ? ((c: Chord) => {
+
       val scaleTones = new Scale(A, minor).getTones
       for (chordTone <- c.getTones)
         if (!(scaleTones contains chordTone))

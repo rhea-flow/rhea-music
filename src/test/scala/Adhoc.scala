@@ -17,6 +17,7 @@ import rhea_music.constants.Tones._
 import rhea_music.constants.Octaves._
 import rhea_music.constants.Durations._
 import rhea_music.constants.NoteMods._
+import rhea_music.constants.Instruments._
 
 /**
  * @author Orestis Melkonian
@@ -45,20 +46,31 @@ class Adhoc {
     println(m.extractString)
   }
 
-//  @Test
+  @Test
   def melodies(): Unit = {
+
     val CM = new Scale(C, major)
+    val BL = new Scale(B, lydian)
+    val AJ = new Scale(A, japanese)
 
+    // Melody
     val Array(s1, s2) = ChaosStream.from(ComplexFunction.f3(1.4, 0.3), 100)
-    val m1 = s1.mapTo[Note](constraintNotes(CM, high))
-               .setDuration(s2.mapTo[String](basicDurations))
+    val m1 = s1.mapTo[Note](constraintNotes(BL, high))
+               .setDuration(s2.mapTo[String](medium))
 
-    val Array(s3, s4) = ChaosStream.from(ComplexFunction.f3(1.4, 0.3), 100)
-    val m2 = s4.mapTo[Note](constraintNotes(CM, low))
-               .setDuration(s3.mapTo[String](basicDurations))
+    // Bass
+    val Array(s3, s4) = ChaosStream.from(ComplexFunction.f3(1.4, .3), 100)
+    val m2 = s4.mapTo[Note](constraintNotes(BL, low))
+               .setDuration(s3.mapTo[String](slow))
 
-    (m1 || m2)
-      .writeMidi("melodies")
+    // Harmony
+    val Array(s5, s6) = ChaosStream.from(ComplexFunction.f3(1.42, .28), 100)
+    val h = s5.mapTo[Chord](constraintChords(constraintNotes(BL, mid)))
+              .setDuration(s6.mapTo[String](Array(wh, hf, hf_)))
+
+    MusicStream.playString(m1.extractString)
+//    ((CELLO |> m1) || (m2)) //|| h)
+      //      .writeMidi("melodies")
 //      .play()
 
     Threads.sleep()

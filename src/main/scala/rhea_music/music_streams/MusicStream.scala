@@ -8,6 +8,7 @@ import scala.languageFeature.implicitConversions._
 import java.io.File
 
 import org.jfugue.midi.MidiFileManager
+import org.jfugue.pattern.Pattern
 import org.jfugue.player.Player
 import org.jfugue.realtime.RealtimePlayer
 import org.rhea_core.Stream
@@ -67,6 +68,10 @@ object MusicStream {
 
   def repeatFunc[T](func: () => T): Stream[T] =
     Stream.just(func()).loop((entry: Stream[T]) => entry.map(n => func()))
+
+  def playString(s: String) =
+    RTplayer.play(new Pattern(s))
+
 
   /*def sync(s1: MusicStream, s2: MusicStream): MusicStream =
     Stream.zip[PatternProducer, PatternProducer, PatternProducer](

@@ -23,7 +23,9 @@ object Octaves {
 
   // Ranges
   val low = 2 to 3 toArray
+  val lowmid = 2 to 4 toArray
   val mid = 3 to 4 toArray
+  val midhigh = 3 to 5 toArray
   val high = 4 to 5 toArray
 
   // Array collection

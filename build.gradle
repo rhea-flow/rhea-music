@@ -20,9 +20,9 @@ configurations.all {
 dependencies {
 
 	// rhea-flow
-	compile 'com.github.rhea-flow:rhea-core:1.0.0'
-	compile 'com.github.rhea-flow:rx-eval:1.0.0'
-	compile 'com.github.rhea-flow:scala-wrapper:1.0.0'
+	compile 'com.github.rhea-flow:rhea-core:-SNAPSHOT'
+	compile 'com.github.rhea-flow:rx-eval:-SNAPSHOT'
+	compile 'com.github.rhea-flow:scala-wrapper:-SNAPSHOT'
 
     // jFugue
 	compile files('./jfugue-5.0.7.jar')
@@ -30,13 +30,13 @@ dependencies {
 	compile files('./xom-1.2.10.jar')
 
 	// Scala
-  	compile 'org.scala-lang:scala-compiler:2.12.0-M3'
-  	compile 'org.scala-lang:scala-library:2.12.0-M3'
+	compile 'org.scala-lang:scala-compiler:2.12.0-M3'
+	compile 'org.scala-lang:scala-library:2.12.0-M3'
 	compile 'org.scala-lang.modules:scala-java8-compat_2.12.0-M5:0.8.0-RC3'
 
 	testCompile 'junit:junit:4.11'
-	testCompile 'com.github.rhea-flow:test-data:1.0.0'
-	testCompile 'com.github.rhea-flow:graph-viz:1.0.0'
+	testCompile 'com.github.rhea-flow:test-data:-SNAPSHOT'
+	testCompile 'com.github.rhea-flow:graph-viz:-SNAPSHOT'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -63,6 +63,7 @@ test {
 		exceptionFormat = 'full'
 	}
 }
+
 
 if (JavaVersion.current().isJava8Compatible()) {
 	allprojects {

@@ -12,8 +12,9 @@ import org.jfugue.pattern.Pattern
 import org.jfugue.player.Player
 import org.jfugue.realtime.RealtimePlayer
 import org.rhea_core.Stream
-import rhea_music.music_types.{MusicString, Voice, Wrapper}
+import rhea_music.music_types.{MusicString, Wrapper, Voice, Instrument}
 import rhea_music.util.VoiceMinter
+import rhea_music.constants.Instruments._
 
 /**
   * @author Orestis Melkonian
@@ -25,17 +26,10 @@ class MusicStream(val _stream: Stream[_ <: MusicString]) {
   def set(wrapper: Wrapper) =
     context = context :+ wrapper
 
-  def setVoice(voice: Voice): MusicStream =
+  def ||(that: MusicStream): MusicStream =
     Stream.concat(
-      Stream.just(voice),
-      _stream
-    )
-
-  def ||(that: MusicStream): MusicStream = {
-    val v1 = VoiceMinter.nextVoice
-    val v2 = VoiceMinter.nextVoice
-    Stream.concat(setVoice(v1), that.setVoice(v2))
-  }
+      VoiceMinter.nextVoice ||> this,
+      VoiceMinter.nextVoice ||> that)
 
   def extractString: String =
     _stream.accumulate().toBlocking.first().repr
@@ -46,13 +40,12 @@ class MusicStream(val _stream: Stream[_ <: MusicString]) {
   def writeMidi(filename: String): Unit = {
     println("Writing MIDI file...")
     _stream.accumulate().subscribe((p: MusicString) => {
-      println(p.repr)
       MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"))
       println("Done [" + filename + ".midi" + "]")
     })
   }
 
-  def play() = _stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
+  def play() = _stream.subscribe { s => MusicStream.RTplayer.play(s) }
 
   def playTogether() = _stream.subscribe((s: MusicString) => MusicStream.RTplayer.play(s))
 
@@ -72,27 +65,4 @@ object MusicStream {
   def playString(s: String) =
     RTplayer.play(new Pattern(s))
 
-
-  /*def sync(s1: MusicStream, s2: MusicStream): MusicStream =
-    Stream.zip[PatternProducer, PatternProducer, PatternProducer](
-      s1, s2,
-      (p1: PatternProducer, p2: PatternProducer) =>
-        new Pattern().add(p1.getPattern.setVoice(1), p2.getPattern.setVoice(2))
-      )
-
-  def sync3(s1: MusicStream, s2: MusicStream, s3: MusicStream): MusicStream =
-    Stream.zip[PatternProducer, PatternProducer, PatternProducer, PatternProducer](
-      s1, s2, s3,
-      (p1: PatternProducer, p2: PatternProducer, p3: PatternProducer) =>
-        new Pattern().add(p1.getPattern.setVoice(1), p2.getPattern.setVoice(2),
-                          p3.getPattern.setVoice(3))
-      )
-
-  def sync4(s1: MusicStream, s2: MusicStream, s3: MusicStream, s4: MusicStream): MusicStream =
-    Stream.zip[PatternProducer, PatternProducer, PatternProducer, PatternProducer, PatternProducer](
-      s1, s2, s3, s4,
-      (p1: PatternProducer, p2: PatternProducer, p3: PatternProducer, p4: PatternProducer) =>
-        new Pattern().add(p1.getPattern.setVoice(1), p2.getPattern.setVoice(2),
-                          p3.getPattern.setVoice(2), p4.getPattern.setVoice(4))
-      )*/
 }
